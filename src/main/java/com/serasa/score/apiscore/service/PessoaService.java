@@ -62,8 +62,8 @@ public class PessoaService {
                     .nome(pessoa.getNome())
                     .telefone(pessoa.getTelefone())
                     .idade(pessoa.getIdade())
-                    .scoreDescricao(recuperarScoreDescricao(pessoa.getScore()))//TODO fazer logica
-                    .estados(recuperarEstados(pessoa.getRegiao()))//TODO fazer logica
+                    .scoreDescricao(recuperarScoreDescricao(pessoa.getScore()))
+                    .estados(recuperarEstados(pessoa.getRegiao()))
                     .build();
             log.info("Finalizado a busca de pessoa por id com sucesso.", pessoaResponse);
             return pessoaResponse;
@@ -82,8 +82,8 @@ public class PessoaService {
                         .nome(pessoa.getNome())
                         .cidade(pessoa.getCidade())
                         .estado(pessoa.getEstado())
-                        .scoreDescricao(recuperarScoreDescricao(pessoa.getScore()))//TODO fazer logica
-                        .estados(recuperarEstados(pessoa.getRegiao()))//TODO fazer logica
+                        .scoreDescricao(recuperarScoreDescricao(pessoa.getScore()))
+                        .estados(recuperarEstados(pessoa.getRegiao()))
                         .build();
                 listapessoa.add(pessoaResponse);
             }

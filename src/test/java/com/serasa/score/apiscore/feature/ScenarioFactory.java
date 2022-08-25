@@ -9,22 +9,28 @@ import com.serasa.score.apiscore.domain.model.Pessoa;
 import com.serasa.score.apiscore.domain.model.Score;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class ScenarioFactory {
     public static List<PessoaDTO> retornaListaPessoa(){
+        var estado = new String[1];
         return  List.of(PessoaDTO.builder()
-                        .nome("")
+                        .nome("teste")
+                        .cidade("")
+                        .estado("SP")
+                        .scoreDescricao("recomendavel")
+                        .estados(estado)
                 .build());
     }
     public static PessoaDTO retornaListaPessoaPorId(){
         var estado = new String[1];
         return  PessoaDTO.builder()
-                .nome("")
+                .nome("teste")
+                .telefone("11111111")
+                .idade(20)
+                .scoreDescricao("recomendavel")
                 .estados(estado)
-                .idade(10)
                 .build();
     }
     public static PessoaRequestDTO retornaPessoaRequestDTO(){
