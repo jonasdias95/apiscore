@@ -1,12 +1,15 @@
 package com.serasa.score.apiscore.domain.model;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
-@Builder
+
+
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "Afinidade")
 public class Afinidade {
     @Id
@@ -17,12 +20,8 @@ public class Afinidade {
     @Column(name = "regiao", nullable = false)
     private String regiao;
 
-    @Column(name = "estado", nullable = false)
-    private String estado;
+    @Column(name = "estados", nullable = false)
+    private String [] estados;
 
-
-    @OneToOne(cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "id_score")
-    private Score score;
 
 }

@@ -1,12 +1,11 @@
 package com.serasa.score.apiscore.domain.model;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 @Builder
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "Pessoa")
@@ -32,4 +31,15 @@ public class Pessoa {
     @Column(name = "regiao", nullable = false)
     private String regiao;
 
+    public Pessoa(Integer id, LocalDate data, String nome, String telefone, Integer idade, String cidade, Integer score, String estado, String regiao) {
+        this.id = id;
+        this.data = data;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.idade = idade;
+        this.cidade = cidade;
+        this.score = score;
+        this.estado = estado;
+        this.regiao = regiao;
+    }
 }
