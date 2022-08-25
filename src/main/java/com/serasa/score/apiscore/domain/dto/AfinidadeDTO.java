@@ -7,12 +7,16 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 @Data
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class AfinidadeDTO {
+    @NotBlank
     private String regiao;
+    @NotNull
     private List<String> estados;
 
 }

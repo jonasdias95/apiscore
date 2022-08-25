@@ -1,6 +1,9 @@
 package com.serasa.score.apiscore.service;
 
+import com.serasa.score.apiscore.configuration.exception.NoContentException;
+import com.serasa.score.apiscore.configuration.exception.NotFoundException;
 import com.serasa.score.apiscore.domain.dto.PessoaDTO;
+import com.serasa.score.apiscore.domain.dto.PessoaRequestDTO;
 import com.serasa.score.apiscore.domain.model.Afinidade;
 import com.serasa.score.apiscore.domain.model.Pessoa;
 import com.serasa.score.apiscore.domain.model.Score;
@@ -25,10 +28,14 @@ public class PessoaService {
 
     @Autowired
     private ScoreRepository scoreRepository;
-    public void salvarPessoa(PessoaDTO pessoaDTO){
+    public void salvarPessoa(PessoaRequestDTO pessoaDTO){
         try {
-            log.info("Iniciando pessistencia de daados da Pessoa");
-            var pessoa =Pessoa.builder()
+            log.info("Iniciando pessistencia de dados da Pessoa");
+            var afinidade = recuperarEstados(pessoaDTO.getRegiao());
+            var score = recuperarScoreDescricao(pessoaDTO.getScore());
+            if (afinidade == null || score.isBlank())
+                throw new NotFoundException("Nao tem regiao ou score cadastrados!");
+            var pessoa = Pessoa.builder()
                     .data(LocalDate.now())
                     .nome(pessoaDTO.getNome())
                     .idade(pessoaDTO.getIdade())
@@ -49,7 +56,7 @@ public class PessoaService {
     public PessoaDTO buscarPessoaPorId (Integer id){
         try {
             log.info("Iniciando a busca de pessoa por id.");
-            Pessoa pessoa= pessoaRepository.findById(id).orElseThrow(()-> new RuntimeException("Não encontrado"));
+            Pessoa pessoa= pessoaRepository.findById(id).orElseThrow(()-> new NoContentException());
 
             var pessoaResponse= PessoaDTO.builder()
                     .nome(pessoa.getNome())
@@ -81,7 +88,7 @@ public class PessoaService {
                 listapessoa.add(pessoaResponse);
             }
             if (listapessoa.isEmpty())
-                throw new RuntimeException("Nunhum registro encontrado");
+                throw new NoContentException();
 
             return listapessoa;
         }catch (Exception e){
@@ -94,8 +101,8 @@ public class PessoaService {
         String descricao = "";
         var listaScore = scoreRepository.findAll();
         for (Score score : listaScore) {
-            if (score.getInicial() >= scorePessoa ||
-                    score.getIfinal() <= scorePessoa)
+            if (scorePessoa >= score.getInicial() ||
+                    scorePessoa <= score.getIfinal())
                 descricao = score.getDescricao();
         }
         return descricao;

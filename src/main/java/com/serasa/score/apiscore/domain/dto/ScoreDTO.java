@@ -8,15 +8,20 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ScoreDTO {
+    @NotBlank
     @JsonProperty("scoreDescricao")
     private String descricao;
+    @NotNull
     @JsonProperty("inicial")
     private Integer inicial;
+    @NotNull
     @JsonProperty("final")
     private Integer ifinal;
 }
