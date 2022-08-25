@@ -7,13 +7,14 @@ import com.serasa.score.apiscore.domain.model.Score;
 import com.serasa.score.apiscore.repository.AfinidadeRepository;
 import com.serasa.score.apiscore.repository.PessoaRepository;
 import com.serasa.score.apiscore.repository.ScoreRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 @Service
 public class PessoaService {
 
@@ -26,6 +27,7 @@ public class PessoaService {
     private ScoreRepository scoreRepository;
     public void salvarPessoa(PessoaDTO pessoaDTO){
         try {
+            log.info("Iniciando pessistencia de daados da Pessoa");
             var pessoa =Pessoa.builder()
                     .data(LocalDate.now())
                     .nome(pessoaDTO.getNome())
@@ -37,14 +39,16 @@ public class PessoaService {
                     .score(pessoaDTO.getScore())
                     .build();
             pessoaRepository.save(pessoa);
+            log.info("Finalizado a pessistencia da Pessoa com sucesso!", pessoaDTO);
         }catch (Exception e){
+            log.error("Falha ao salvar dados de pessoa!", e.getMessage());
             e.printStackTrace();
             throw e;
         }
     }
     public PessoaDTO buscarPessoaPorId (Integer id){
         try {
-
+            log.info("Iniciando a busca de pessoa por id.");
             Pessoa pessoa= pessoaRepository.findById(id).orElseThrow(()-> new RuntimeException("Não encontrado"));
 
             var pessoaResponse= PessoaDTO.builder()
@@ -54,8 +58,10 @@ public class PessoaService {
                     .scoreDescricao(recuperarScoreDescricao(pessoa.getScore()))//TODO fazer logica
                     .estados(recuperarEstados(pessoa.getRegiao()))//TODO fazer logica
                     .build();
+            log.info("Finalizado a busca de pessoa por id com sucesso.", pessoaResponse);
             return pessoaResponse;
         }catch (Exception e){
+            log.error("Falha ao buscar dados de pessoa!", e.getMessage());
             e.printStackTrace();
             throw e;
         }
@@ -74,9 +80,12 @@ public class PessoaService {
                         .build();
                 listapessoa.add(pessoaResponse);
             }
+            if (listapessoa.isEmpty())
+                throw new RuntimeException("Nunhum registro encontrado");
 
             return listapessoa;
         }catch (Exception e){
+            log.error("Falha ao buscar dados de pessoas!", e.getMessage());
             e.printStackTrace();
             throw e;
         }
@@ -85,7 +94,7 @@ public class PessoaService {
         String descricao = "";
         var listaScore = scoreRepository.findAll();
         for (Score score : listaScore) {
-            if (score.getInicial() >= scorePessoa &&
+            if (score.getInicial() >= scorePessoa ||
                     score.getIfinal() <= scorePessoa)
                 descricao = score.getDescricao();
         }

@@ -6,9 +6,10 @@ import com.serasa.score.apiscore.domain.model.Afinidade;
 import com.serasa.score.apiscore.domain.model.Score;
 import com.serasa.score.apiscore.repository.AfinidadeRepository;
 import com.serasa.score.apiscore.repository.ScoreRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+@Slf4j
 @Service
 public class ScoreSevice {
 
@@ -23,6 +24,7 @@ public class ScoreSevice {
                     .build();
             scoreRepository.save(score);
         }catch (Exception e){
+            log.error("Falha ao salvar dados de pessoa!", e.getMessage());
             e.printStackTrace();
             throw e;
         }

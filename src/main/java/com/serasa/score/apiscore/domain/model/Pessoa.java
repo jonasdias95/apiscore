@@ -4,10 +4,13 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-@Builder
-@NoArgsConstructor
+
+
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "Pessoa")
 public class Pessoa {
     @Id
@@ -31,15 +34,4 @@ public class Pessoa {
     @Column(name = "regiao", nullable = false)
     private String regiao;
 
-    public Pessoa(Integer id, LocalDate data, String nome, String telefone, Integer idade, String cidade, Integer score, String estado, String regiao) {
-        this.id = id;
-        this.data = data;
-        this.nome = nome;
-        this.telefone = telefone;
-        this.idade = idade;
-        this.cidade = cidade;
-        this.score = score;
-        this.estado = estado;
-        this.regiao = regiao;
-    }
 }

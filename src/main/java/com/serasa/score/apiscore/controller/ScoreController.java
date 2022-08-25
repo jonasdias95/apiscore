@@ -47,7 +47,7 @@ public class ScoreController {
 
     }
     @ResponseStatus(value = HttpStatus.OK)
-    @GetMapping("/pessoa/")
+    @GetMapping("/pessoa")
     public List<PessoaDTO> recuperarPessoas(){
         return pessoaService.buscarPessoas();
     }

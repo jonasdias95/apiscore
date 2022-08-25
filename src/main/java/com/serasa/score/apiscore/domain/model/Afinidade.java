@@ -12,11 +12,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "Afinidade")
 public class Afinidade {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_afinidade", nullable = false)
-    private Integer id;
 
+    @Id
     @Column(name = "regiao", nullable = false)
     private String regiao;
 

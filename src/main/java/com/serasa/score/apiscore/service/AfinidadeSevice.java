@@ -6,11 +6,12 @@ import com.serasa.score.apiscore.domain.model.Afinidade;
 import com.serasa.score.apiscore.domain.model.Pessoa;
 import com.serasa.score.apiscore.repository.AfinidadeRepository;
 import com.serasa.score.apiscore.repository.PessoaRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-
+@Slf4j
 @Service
 public class AfinidadeSevice {
 
@@ -24,6 +25,7 @@ public class AfinidadeSevice {
                     .build();
             afinidadeRepository.save(afinidade);
         }catch (Exception e){
+            log.error("Falha ao salvar dados de afinidade!", e.getMessage());
             e.printStackTrace();
             throw e;
         }

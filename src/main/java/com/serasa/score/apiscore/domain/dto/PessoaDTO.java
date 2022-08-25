@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 @Data
 @Builder
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
 public class PessoaDTO {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String nome;
